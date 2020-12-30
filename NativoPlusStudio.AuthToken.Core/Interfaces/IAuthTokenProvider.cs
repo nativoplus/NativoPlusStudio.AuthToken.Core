@@ -4,6 +4,6 @@ namespace NativoPlusStudio.AuthToken.Core.Interfaces
 {
     public interface IAuthTokenProvider
     {
-        Task<ITokenResponse> GetTokenAsync(bool includeEncryptedTokenInResponse = false);
+        Task<ITokenResponse> GetTokenAsync();
     }
 }

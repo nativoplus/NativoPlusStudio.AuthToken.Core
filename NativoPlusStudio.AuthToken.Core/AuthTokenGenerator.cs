@@ -23,7 +23,7 @@ namespace NativoPlusStudio.AuthToken.Core
             _tokenHttpClientFactory = tokenHttpClientFactory;
         }
 
-        public async Task<ITokenResponse> GetTokenAsync(string protectedResource, bool includeEncryptedTokenInResponse = false)
+        public async Task<ITokenResponse> GetTokenAsync(string protectedResource)
         {
             var tokenResponse = await _tokenHttpClientFactory
                 .GetTokenByAuthTokenProvider(protectedResource)
