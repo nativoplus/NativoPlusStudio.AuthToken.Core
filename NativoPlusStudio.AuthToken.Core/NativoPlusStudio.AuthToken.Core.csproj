@@ -7,7 +7,7 @@
     <PackageProjectUrl>https://github.com/nativoplus/NativoPlusStudio.AuthToken.Core</PackageProjectUrl>
     <PackageTags>authorization token nativoplus</PackageTags>
     <Nullable>disable</Nullable>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using NativoPlusStudio.AuthToken.Core.Interfaces;
+using System;
 
 namespace NativoPlusStudio.AuthToken.DTOs
 {
@@ -7,6 +8,6 @@ namespace NativoPlusStudio.AuthToken.DTOs
         public string Token { get; set; }
         public string EncryptedToken { get; set; }
         public string TokenType { get; set; }
-        public string ExpiresIn { get; set; }
+        public DateTime? ExpiryDateUtc { get; set; }
     }
 }
