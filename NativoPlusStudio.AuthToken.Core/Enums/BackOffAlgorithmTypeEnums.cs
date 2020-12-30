@@ -1,7 +1,7 @@
 ﻿
 namespace NativoPlusStudio.AuthToken.Core.Enums
 {
-    public enum BackOffAlgorithmTypeEnums
+    public enum BackoffAlgorithmTypeEnums
     {
         Constant,
         Linear,

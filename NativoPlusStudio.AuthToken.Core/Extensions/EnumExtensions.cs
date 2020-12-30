@@ -7,14 +7,14 @@ namespace NativoPlusStudio.AuthToken.Core.Extensions
 {
     public static class EnumExtensions
     {
-        public static IEnumerable<TimeSpan> GenerateBackOffTimeSpans(this BackOffAlgorithmTypeEnums enums, int initialDelayInSeconds, int retryCount)
+        public static IEnumerable<TimeSpan> GenerateBackoffDelay(this BackoffAlgorithmTypeEnums enums, int initialDelayInSeconds, int retryCount)
         {
             return enums switch
             {
-                BackOffAlgorithmTypeEnums.Constant => Backoff.ConstantBackoff(delay: TimeSpan.FromSeconds(initialDelayInSeconds), retryCount: retryCount),
-                BackOffAlgorithmTypeEnums.Linear => Backoff.LinearBackoff(initialDelay: TimeSpan.FromSeconds(initialDelayInSeconds), retryCount: retryCount),
-                BackOffAlgorithmTypeEnums.Exponential => Backoff.ExponentialBackoff(initialDelay: TimeSpan.FromSeconds(initialDelayInSeconds), retryCount: retryCount),
-                BackOffAlgorithmTypeEnums.Jitter => Backoff.DecorrelatedJitterBackoffV2(medianFirstRetryDelay: TimeSpan.FromSeconds(initialDelayInSeconds), retryCount: retryCount),
+                BackoffAlgorithmTypeEnums.Constant => Backoff.ConstantBackoff(delay: TimeSpan.FromSeconds(initialDelayInSeconds), retryCount: retryCount),
+                BackoffAlgorithmTypeEnums.Linear => Backoff.LinearBackoff(initialDelay: TimeSpan.FromSeconds(initialDelayInSeconds), retryCount: retryCount),
+                BackoffAlgorithmTypeEnums.Exponential => Backoff.ExponentialBackoff(initialDelay: TimeSpan.FromSeconds(initialDelayInSeconds), retryCount: retryCount),
+                BackoffAlgorithmTypeEnums.Jitter => Backoff.DecorrelatedJitterBackoffV2(medianFirstRetryDelay: TimeSpan.FromSeconds(initialDelayInSeconds), retryCount: retryCount),
                 _ => new TimeSpan[] { TimeSpan.FromSeconds(1) },
             };
         }
