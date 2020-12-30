@@ -1,6 +1,6 @@
-﻿using NativoPlusStudio.AuthToken.HttpClients.Interface;
+﻿using NativoPlusStudio.AuthToken.Core.Interfaces;
 
-namespace NativoPlusStudio.AuthToken.HttpClients.DTOs
+namespace NativoPlusStudio.AuthToken.DTOs
 {
     public class TokenResponse : ITokenResponse
     {

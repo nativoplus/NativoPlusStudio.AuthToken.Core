@@ -1,4 +1,4 @@
-﻿using NativoPlusStudio.AuthToken.HttpClients.Interface;
+﻿using NativoPlusStudio.AuthToken.Core.Interfaces;
 using System.Collections.Generic;
 
 namespace NativoPlusStudio.AuthToken.Core

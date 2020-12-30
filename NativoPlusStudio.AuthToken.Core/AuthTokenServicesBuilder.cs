@@ -10,7 +10,7 @@ namespace NativoPlusStudio.AuthToken.Core
         public IAuthTokenCacheService TokenCacheService { get; private set; }
         public IEncryption EncryptionService { get; private set; }
         public ILogger Logger { get; private set; }
-        public IServiceCollection Services { get; set; }
+        public IServiceCollection Services { private get; set; }
 
 
         public AuthTokenServicesBuilder AddAuthTokenCacheImplementation(IAuthTokenCacheService service)
@@ -28,6 +28,12 @@ namespace NativoPlusStudio.AuthToken.Core
         public AuthTokenServicesBuilder AddLogger(ILogger logger)
         {
             Logger = logger;
+            return this;
+        }
+        
+        public AuthTokenServicesBuilder AddLogger()
+        {
+            Logger = Services.BuildServiceProvider().GetService<ILogger>();
             return this;
         }
     }

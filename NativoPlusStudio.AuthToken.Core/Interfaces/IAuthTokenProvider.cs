@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace NativoPlusStudio.AuthToken.HttpClients.Interface
+namespace NativoPlusStudio.AuthToken.Core.Interfaces
 {
     public interface IAuthTokenProvider
     {

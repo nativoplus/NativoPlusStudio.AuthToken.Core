@@ -1,4 +1,4 @@
-﻿namespace NativoPlusStudio.AuthToken.HttpClients.Interface
+﻿namespace NativoPlusStudio.AuthToken.Core.Interfaces
 {
     public interface ITokenProvidersFactory
     {

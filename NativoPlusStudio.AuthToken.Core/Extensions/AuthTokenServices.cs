@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using NativoPlusStudio.AuthToken.Core.Interfaces;
-using NativoPlusStudio.AuthToken.HttpClients.Interface;
 using NativoPlusStudio.Encryption.Interfaces;
 using System;
 
