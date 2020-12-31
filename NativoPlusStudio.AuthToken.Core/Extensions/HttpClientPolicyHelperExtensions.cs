@@ -70,6 +70,46 @@ namespace NativoPlusStudio.AuthToken.Core.Extensions
                 );
         }
 
+        public static AsyncRetryPolicy<HttpResponseMessage> CreateTokenRefreshPolicyOnHttpResponseMessageState(this IAuthTokenGenerator generator,
+            HttpRequestMessage message,
+            string protectedResource,
+            Func<IAuthTokenGenerator, HttpRequestMessage, string, Task> asyncAction,
+            BackoffAlgorithmTypeEnums backOffType,
+            int initialDelayInSeconds,
+            int retryCount,
+            Func<HttpResponseMessage, bool> condition)
+        {
+            if (generator == null) throw new ArgumentNullException("IAuthTokenGenerator generator", "Must be initialized");
+
+            return generator
+                .WaitAndRetryPolicyWithBackoff(
+                    message, 
+                    protectedResource, 
+                    asyncAction, 
+                    backOffType.GenerateBackoffDelay(initialDelayInSeconds, retryCount),
+                    condition
+                );
+        }
+        
+        public static AsyncRetryPolicy<HttpResponseMessage> CreateTokenRefreshPolicyOnHttpResponseMessageState(this IAuthTokenGenerator generator,
+            HttpRequestMessage message,
+            string protectedResource,
+            Func<IAuthTokenGenerator, HttpRequestMessage, string, Task> asyncAction,
+            int retryCount,
+            Func<HttpResponseMessage, bool> condition)
+        {
+            if (generator == null) throw new ArgumentNullException("IAuthTokenGenerator generator", "Must be initialized");
+
+            return generator
+                .RetryPolicy(
+                    message, 
+                    protectedResource, 
+                    asyncAction, 
+                    retryCount,
+                    condition
+                );
+        }
+
         public static AsyncRetryPolicy<HttpResponseMessage> CreateTokenRefreshPolicy(this IAuthTokenGenerator generator,
             HttpRequestMessage message,
             string protectedResource,
@@ -107,6 +147,22 @@ namespace NativoPlusStudio.AuthToken.Core.Extensions
                     await asyncAction.Invoke(generator, message, protectedResource);
                 });
         }
+        
+        public static AsyncRetryPolicy<HttpResponseMessage> RetryPolicy(this IAuthTokenGenerator generator,
+            HttpRequestMessage message,
+            string protectedResource,
+            Func<IAuthTokenGenerator, HttpRequestMessage, string, Task> asyncAction,
+            int retryCount,
+            Func<HttpResponseMessage, bool> condition
+            )
+        {
+            return Policy
+                .HandleResult<HttpResponseMessage>(message => condition.Invoke(message))
+                .RetryAsync(retryCount, async (result, retryCount, context) =>
+                {
+                    await asyncAction.Invoke(generator, message, protectedResource);
+                });
+        }
 
         public static AsyncRetryPolicy<HttpResponseMessage> WaitAndRetryPolicyWithBackoff(this IAuthTokenGenerator generator,
             HttpRequestMessage message,
@@ -120,6 +176,23 @@ namespace NativoPlusStudio.AuthToken.Core.Extensions
 
             return Policy
                 .HandleResult<HttpResponseMessage>(message => httpStatusCodes.Contains(message.StatusCode))
+                .WaitAndRetryAsync(delay, async (result, retryCount, context) =>
+                {
+                    await asyncAction.Invoke(generator, message, protectedResource);
+                });
+        }
+        
+        public static AsyncRetryPolicy<HttpResponseMessage> WaitAndRetryPolicyWithBackoff(this IAuthTokenGenerator generator,
+            HttpRequestMessage message,
+            string protectedResource,
+            Func<IAuthTokenGenerator, HttpRequestMessage, string, Task> asyncAction,
+            IEnumerable<TimeSpan> delay,
+            Func<HttpResponseMessage, bool> condition
+            )
+        {
+
+            return Policy
+                .HandleResult<HttpResponseMessage>(message => condition.Invoke(message))
                 .WaitAndRetryAsync(delay, async (result, retryCount, context) =>
                 {
                     await asyncAction.Invoke(generator, message, protectedResource);
