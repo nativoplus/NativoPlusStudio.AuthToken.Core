@@ -4,7 +4,7 @@
     {
         void AddAuthTokenProvider(string protectedResource, IAuthTokenProvider implementation);
 
-        IAuthTokenProvider GetTokenByAuthTokenProvider(string consortiumRawDataTable);
+        IAuthTokenProvider GetTokenByAuthTokenProvider(string protectedResource);
         
     }
 }

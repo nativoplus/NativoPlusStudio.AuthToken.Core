@@ -75,5 +75,11 @@ namespace NativoPlusStudio.AuthToken.Core.Extensions
             }
             return (genericResponse, response.IsSuccessStatusCode, response.StatusCode.ToString(), response.ReasonPhrase);
         }
+        
+        public static async Task<(string Response, bool Status, string Code, string Message)> TransformHttpResponseToString(this HttpResponseMessage response)
+        {
+            var data = await response.Content.ReadAsStringAsync();
+            return (data, response.IsSuccessStatusCode, response.StatusCode.ToString(), response.ReasonPhrase);
+        }
     }
 }
