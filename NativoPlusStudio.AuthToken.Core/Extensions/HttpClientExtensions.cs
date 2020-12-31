@@ -24,9 +24,9 @@ namespace NativoPlusStudio.AuthToken.Core.Extensions
             return response;
         }
 
-        public static async Task<HttpResponseMessage> PostAsync<TRequest>(this HttpClient client, TRequest request, string endpoint = "") where TRequest : new()
+        public static async Task<HttpResponseMessage> PostAsync<TRequest>(this HttpClient client, TRequest request, string endpoint = "", string mediaType = "application/json") where TRequest : new()
         {
-            var content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
+            var content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, mediaType);
 
             var response = await client
                 .PostAsync(endpoint, content);
@@ -34,9 +34,9 @@ namespace NativoPlusStudio.AuthToken.Core.Extensions
             return response;
         }
 
-        public static async Task<HttpResponseMessage> PutAsync<TRequest>(this HttpClient client, TRequest request, string endpoint = "") where TRequest : new()
+        public static async Task<HttpResponseMessage> PutAsync<TRequest>(this HttpClient client, TRequest request, string endpoint = "", string mediaType = "application/json") where TRequest : new()
         {
-            var content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
+            var content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, mediaType);
             var response = await client
                 .PutAsync(endpoint, content);
             return response;
