@@ -50,6 +50,46 @@ namespace NativoPlusStudio.AuthToken.Core.Extensions
                     HttpStatusCode.Unauthorized
                 );
         }
+        
+        public static AsyncRetryPolicy<HttpResponseMessage> CreateTokenRefreshPolicy(this IAuthTokenGenerator generator,
+            HttpRequestMessage message,
+            string protectedResource,
+            Func<IAuthTokenGenerator, HttpRequestMessage, string, Task> asyncAction,
+            int retryCount,
+            params HttpStatusCode[] httpStatusCodes)
+        {
+            if (generator == null) throw new ArgumentNullException("IAuthTokenGenerator generator", "Must be initialized");
+
+            return generator
+                .RetryPolicy(
+                    message, 
+                    protectedResource, 
+                    asyncAction, 
+                    retryCount,
+                    httpStatusCodes
+                );
+        }
+
+        public static AsyncRetryPolicy<HttpResponseMessage> CreateTokenRefreshPolicy(this IAuthTokenGenerator generator,
+            HttpRequestMessage message,
+            string protectedResource,
+            Func<IAuthTokenGenerator, HttpRequestMessage, string, Task> asyncAction,
+            BackoffAlgorithmTypeEnums backOffType,
+            int initialDelayInSeconds,
+            int retryCount,
+            params HttpStatusCode[] httpStatusCodes)
+        {
+            if (generator == null) throw new ArgumentNullException("IAuthTokenGenerator generator", "Must be initialized");
+
+            return generator
+                .WaitAndRetryPolicyWithBackoff(
+                    message, 
+                    protectedResource, 
+                    asyncAction, 
+                    backOffType.GenerateBackoffDelay(initialDelayInSeconds, retryCount),
+                    httpStatusCodes
+                );
+        }
 
         public static AsyncRetryPolicy<HttpResponseMessage> RetryPolicy(this IAuthTokenGenerator generator,
             HttpRequestMessage message,
