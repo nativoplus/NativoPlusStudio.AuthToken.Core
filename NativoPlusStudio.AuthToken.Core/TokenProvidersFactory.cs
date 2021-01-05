@@ -15,6 +15,7 @@ namespace NativoPlusStudio.AuthToken.Core
         {
             if (_tokenProviderMap.ContainsKey(protectedResource))
             {
+                _tokenProviderMap[protectedResource] = null;
                 _tokenProviderMap[protectedResource] = implementation;
             }
             else

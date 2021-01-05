@@ -8,7 +8,7 @@ namespace NativoPlusStudio.AuthToken.Core.Extensions
 {
     public static class AuthTokenServices
     {
-        public static IServiceCollection AddAuthTokenProvider(this IServiceCollection services, Action<IAuthTokenProviderBuilder> action) 
+        public static void AddTokenProviderHelper(this IServiceCollection services, string protectedResourceName, Action action = null) 
         {
             if (services == null)
             {
@@ -18,27 +18,18 @@ namespace NativoPlusStudio.AuthToken.Core.Extensions
             services.AddScoped<IAuthTokenGenerator, AuthTokenGenerator>();
             services.AddScoped<ITokenProvidersFactory, TokenProvidersFactory>();
 
-            var builder = new AuthTokenProviderBuilder() { Services = services };
-
-            action?.Invoke(builder);
-
-            return services;
-        }
-
-        public static void AddTokenProviderHelper(this IAuthTokenProviderBuilder builder, string protectedResourceName, Action action = null) 
-        {
-            builder.Services.RemoveAll<IAuthTokenProvider>();
-            builder.Services.RemoveAll<IEncryption>();
-            builder.Services.RemoveAll<IAuthTokenCacheService>();
+            services.RemoveAll<IAuthTokenProvider>();
+            services.RemoveAll<IEncryption>();
+            services.RemoveAll<IAuthTokenCacheService>();
 
             action?.Invoke();
 
-            var provider = builder.Services.BuildServiceProvider();
+            var provider = services.BuildServiceProvider();
             var ficosoProvider = provider.GetRequiredService<IAuthTokenProvider>();
             var factoryProvider = provider.GetRequiredService<ITokenProvidersFactory>();
             factoryProvider.AddAuthTokenProvider(protectedResourceName, ficosoProvider);
-            builder.Services.RemoveAll<ITokenProvidersFactory>();
-            builder.Services.AddScoped<ITokenProvidersFactory, TokenProvidersFactory>(p => (TokenProvidersFactory)factoryProvider);
+            services.RemoveAll<ITokenProvidersFactory>();
+            services.AddScoped<ITokenProvidersFactory, TokenProvidersFactory>(p => (TokenProvidersFactory)factoryProvider);
         }
     }
 }
