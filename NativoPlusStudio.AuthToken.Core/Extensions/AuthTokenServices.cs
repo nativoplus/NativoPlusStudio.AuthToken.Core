@@ -15,8 +15,8 @@ namespace NativoPlusStudio.AuthToken.Core.Extensions
                 throw new ArgumentNullException(nameof(services));
             }
 
-            services.AddScoped<IAuthTokenGenerator, AuthTokenGenerator>();
-            services.AddScoped<ITokenProvidersFactory, TokenProvidersFactory>();
+            services.TryAddSingleton<IAuthTokenGenerator, AuthTokenGenerator>();
+            services.TryAddSingleton<ITokenProvidersFactory, TokenProvidersFactory>();
 
             services.RemoveAll<IAuthTokenProvider>();
             services.RemoveAll<IEncryption>();
@@ -29,7 +29,7 @@ namespace NativoPlusStudio.AuthToken.Core.Extensions
             var factoryProvider = provider.GetRequiredService<ITokenProvidersFactory>();
             factoryProvider.AddAuthTokenProvider(protectedResourceName, ficosoProvider);
             services.RemoveAll<ITokenProvidersFactory>();
-            services.AddScoped<ITokenProvidersFactory, TokenProvidersFactory>(p => (TokenProvidersFactory)factoryProvider);
+            services.AddSingleton<ITokenProvidersFactory, TokenProvidersFactory>(p => (TokenProvidersFactory)factoryProvider);
         }
     }
 }
