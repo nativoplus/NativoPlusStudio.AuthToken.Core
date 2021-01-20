@@ -8,7 +8,7 @@ using Serilog;
 using System;
 using System.Threading.Tasks;
 
-namespace Example
+namespace ExampleLib
 {
     public class ExampleTokenProvider : BaseTokenProvider<BaseOptions>, IAuthTokenProvider
     {
@@ -26,7 +26,7 @@ namespace Example
 
             //add optional code to get the token from a cache
             //add optional code to encrypt the token
-            return new TokenResponse() { EncryptedToken = "thisismyencryptedtoken", ExpiryDateUtc = DateTime.UtcNow, Token = "thisismytoken", TokenType = "Bearer" };
+            return new TokenResponse() { EncryptedToken = "thisismyencryptedtoken", ExpiryDateUtc = DateTime.MaxValue, Token = "thisismytoken", TokenType = "Bearer" };
         }
     }
 }

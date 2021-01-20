@@ -1,10 +1,15 @@
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NativoPlusStudio.AuthToken.Core.Extensions;
+using NativoPlusStudio.AuthToken.Core.Interfaces;
+using NativoPlusStudio.AuthToken.DTOs;
+using Newtonsoft.Json;
+using System;
 
 namespace NativoPlusStudio.AuthToken.CoreTest
 {
     [TestClass]
-    public class AuthTokenCoreTests
+    public class AuthTokenCoreTests : BaseConfiguration
     {
         [TestMethod]
         public void ExtensionTests()
@@ -14,6 +19,20 @@ namespace NativoPlusStudio.AuthToken.CoreTest
                 .GetClaimFromJwtToken("exp")
                 .GetExpirationDateInUtcFromJwsTokenClaim();
             Assert.IsTrue(date.HasValue);
+        }
+        
+        [TestMethod]
+        public void AuthTokenGeneratorTest()
+        {
+            IAuthTokenGenerator authTokenGenerator;
+
+            authTokenGenerator = serviceProvider.GetRequiredService<IAuthTokenGenerator>();
+
+            var token = authTokenGenerator?.GetTokenAsync(protectedResource: implementationName).GetAwaiter().GetResult();
+            var tokenResp = new TokenResponse() { EncryptedToken = "thisismyencryptedtoken", ExpiryDateUtc = DateTime.MaxValue, Token = "thisismytoken", TokenType = "Bearer" };
+            var tokenStr1 = JsonConvert.SerializeObject(token);
+            var tokenStr2 = JsonConvert.SerializeObject(tokenResp);
+            Assert.IsTrue(tokenStr1 == tokenStr2);
         }
     }
 }

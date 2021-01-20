@@ -9,7 +9,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{167F520C-F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NativoPlusStudio.AuthToken.CoreTest", "NativoPlusStudio.AuthToken.CoreTest\NativoPlusStudio.AuthToken.CoreTest.csproj", "{E647F608-CC9D-41C2-B812-76AE1F6CA623}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example", "Example\Example.csproj", "{32F1F3CF-2364-461A-AD53-99F25A2B4A39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example", "Example\Example.csproj", "{32F1F3CF-2364-461A-AD53-99F25A2B4A39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleLib", "ExampleLib\ExampleLib.csproj", "{186D55BD-673E-4737-9904-A18BBDEBCB1B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{32F1F3CF-2364-461A-AD53-99F25A2B4A39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32F1F3CF-2364-461A-AD53-99F25A2B4A39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32F1F3CF-2364-461A-AD53-99F25A2B4A39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{186D55BD-673E-4737-9904-A18BBDEBCB1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{186D55BD-673E-4737-9904-A18BBDEBCB1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{186D55BD-673E-4737-9904-A18BBDEBCB1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{186D55BD-673E-4737-9904-A18BBDEBCB1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

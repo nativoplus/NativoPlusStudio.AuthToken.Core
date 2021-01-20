@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ExampleLib\ExampleLib.csproj" />
     <ProjectReference Include="..\NativoPlusStudio.AuthToken.Core\NativoPlusStudio.AuthToken.Core.csproj" />
   </ItemGroup>
 

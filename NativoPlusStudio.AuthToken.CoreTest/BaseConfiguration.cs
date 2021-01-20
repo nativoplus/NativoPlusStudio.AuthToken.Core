@@ -1,38 +1,31 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using NativoPlusStudio.AuthToken.Core.Extensions;
 using NativoPlusStudio.AuthToken.Core.Interfaces;
-using Newtonsoft.Json;
+using NativoPlusStudio.AuthToken.Core.Extensions;
+using System;
 using ExampleLib;
 
-namespace Example
+namespace NativoPlusStudio.AuthToken.CoreTest
 {
-    class Program
+    public abstract class BaseConfiguration
     {
         public static IServiceProvider serviceProvider;
-        public static IAuthTokenGenerator authTokenGenerator;
-        static void Main(string[] args)
+        public static string implementationName = "NameOfImplementation";
+
+        public BaseConfiguration()
         {
             var services = new ServiceCollection();
-            var implementationName = "NameOfImplementation";
             services.AddTokenProviderHelper(
                 protectedResourceName: implementationName,
                 () =>
                 {
                     //necessary code to register you own implementation
-                    
+
                     services.AddScoped<IAuthTokenProvider, ExampleTokenProvider>();
                     //services.AddHttpClient<IAuthTokenProvider, ExampleTokenProvider>();
                 }
             );
 
             serviceProvider = services.BuildServiceProvider();
-
-            authTokenGenerator = serviceProvider.GetRequiredService<IAuthTokenGenerator>();
-
-            var token = authTokenGenerator.GetTokenAsync(protectedResource: implementationName).GetAwaiter().GetResult();
-            
-            Console.WriteLine(JsonConvert.SerializeObject(token));
         }
     }
 }
